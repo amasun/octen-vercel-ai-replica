@@ -22,7 +22,10 @@ interface BenchmarkSectionProps {
 export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: propVersion }) => {
   const [metricMode, setMetricMode] = useState<'simple' | 'fresh'>('simple');
   const currentVersion = propVersion || (typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('v') as any) : 'v2') || 'v2';
-  const isV2 = currentVersion !== 'v1';
+  const isV1 = currentVersion === 'v1';
+  const isV2 = currentVersion === 'v2';
+  const isV3 = currentVersion === 'v3';
+  const isWhiteBg = isV2 || isV3;
 
   return (
     <section
@@ -30,13 +33,13 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
       style={{
         padding: '100px 0 120px',
         position: 'relative',
-        backgroundColor: isV2 ? '#ffffff' : 'transparent',
-        color: isV2 ? '#0f172a' : '#ffffff',
+        backgroundColor: isWhiteBg ? '#ffffff' : 'transparent',
+        color: isWhiteBg ? '#0f172a' : '#ffffff',
         transition: 'background-color 0.3s ease'
       }}
     >
-      {/* Bottom Transition Gradient for White Section to Dark Footer in v2 */}
-      {isV2 && (
+      {/* Bottom Transition Gradient for White Section to Dark Footer in v2/v3 */}
+      {isWhiteBg && (
         <div
           style={{
             position: 'absolute',
@@ -64,17 +67,17 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
         >
           {/* Left Column: Heading & Description */}
           <div>
-            <div className="pill-badge" style={{ marginBottom: '16px', backgroundColor: isV2 ? 'rgba(34, 197, 94, 0.1)' : 'rgba(96, 255, 112, 0.1)', borderColor: isV2 ? '#16a34a' : '#60ff70', color: isV2 ? '#15803d' : '#60ff70' }}>
-              <Award size={14} color={isV2 ? '#16a34a' : '#60ff70'} />
+            <div className="pill-badge" style={{ marginBottom: '16px', backgroundColor: isWhiteBg ? 'rgba(34, 197, 94, 0.1)' : 'rgba(96, 255, 112, 0.1)', borderColor: isWhiteBg ? '#16a34a' : '#60ff70', color: isWhiteBg ? '#15803d' : '#60ff70' }}>
+              <Award size={14} color={isWhiteBg ? '#16a34a' : '#60ff70'} />
               <span>Performance & Accuracy</span>
             </div>
-            <h2 style={{ color: isV2 ? '#0f172a' : '#fff', marginBottom: '16px' }}>
+            <h2 style={{ color: isWhiteBg ? '#0f172a' : '#fff', marginBottom: '16px' }}>
               Built to Perform
             </h2>
-            <h3 style={{ fontSize: '24px', color: isV2 ? '#16a34a' : '#60ff70', marginBottom: '16px' }}>
+            <h3 style={{ fontSize: '24px', color: isWhiteBg ? '#15803d' : '#60ff70', marginBottom: '16px' }}>
               Top on Industry Benchmarks
             </h3>
-            <p style={{ fontSize: '16px', color: isV2 ? '#475569' : 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
+            <p style={{ fontSize: '16px', color: isWhiteBg ? '#334155' : 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
               Cleaner inputs for your LLM. Fewer hallucinations downstream. Rated #1 on SimpleQA accuracy and FreshQA Strict evaluation.
             </p>
 
@@ -87,9 +90,9 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
                   borderRadius: '8px',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  backgroundColor: metricMode === 'simple' ? (isV2 ? '#16a34a' : '#60ff70') : (isV2 ? '#f1f5f9' : 'rgba(255,255,255,0.05)'),
-                  color: metricMode === 'simple' ? (isV2 ? '#ffffff' : '#050806') : (isV2 ? '#0f172a' : 'var(--text-muted)'),
-                  border: isV2 ? '1px solid #cbd5e1' : '1px solid rgba(255,255,255,0.1)'
+                  backgroundColor: metricMode === 'simple' ? (isWhiteBg ? '#15803d' : '#60ff70') : (isWhiteBg ? '#f1f5f9' : 'rgba(255,255,255,0.05)'),
+                  color: metricMode === 'simple' ? (isWhiteBg ? '#ffffff' : '#050806') : (isWhiteBg ? '#0f172a' : 'var(--text-muted)'),
+                  border: isWhiteBg ? '1px solid #cbd5e1' : '1px solid rgba(255,255,255,0.1)'
                 }}
               >
                 SimpleQA Benchmark
@@ -102,9 +105,9 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
                   borderRadius: '8px',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  backgroundColor: metricMode === 'fresh' ? (isV2 ? '#16a34a' : '#60ff70') : (isV2 ? '#f1f5f9' : 'rgba(255,255,255,0.05)'),
-                  color: metricMode === 'fresh' ? (isV2 ? '#ffffff' : '#050806') : (isV2 ? '#0f172a' : 'var(--text-muted)'),
-                  border: isV2 ? '1px solid #cbd5e1' : '1px solid rgba(255,255,255,0.1)'
+                  backgroundColor: metricMode === 'fresh' ? (isWhiteBg ? '#15803d' : '#60ff70') : (isWhiteBg ? '#f1f5f9' : 'rgba(255,255,255,0.05)'),
+                  color: metricMode === 'fresh' ? (isWhiteBg ? '#ffffff' : '#050806') : (isWhiteBg ? '#0f172a' : 'var(--text-muted)'),
+                  border: isWhiteBg ? '1px solid #cbd5e1' : '1px solid rgba(255,255,255,0.1)'
                 }}
               >
                 FreshQA Strict
@@ -114,16 +117,16 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
 
           {/* Right Column: Visual Accuracy Bar Chart */}
           <div
-            className={isV2 ? '' : 'card-glass'}
+            className={isWhiteBg ? (isV3 ? '' : '') : 'card-glass'}
             style={{
               padding: '32px',
               borderRadius: '16px',
-              backgroundColor: isV2 ? '#ffffff' : undefined,
-              border: isV2 ? '1px solid #e2e8f0' : '1px solid rgba(96, 255, 112, 0.25)',
-              boxShadow: isV2 ? '0 10px 30px rgba(0,0,0,0.05)' : undefined
+              backgroundColor: isWhiteBg ? '#ffffff' : undefined,
+              border: isWhiteBg ? '1px solid #e2e8f0' : '1px solid rgba(96, 255, 112, 0.25)',
+              boxShadow: isWhiteBg ? '0 10px 30px rgba(0,0,0,0.05)' : undefined
             }}
           >
-            <div style={{ fontSize: '12.5px', color: isV2 ? '#64748b' : 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '20px', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: '12.5px', color: isWhiteBg ? '#475569' : 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '20px', fontFamily: 'var(--font-mono)' }}>
               {metricMode === 'simple' ? 'SimpleQA Accuracy Score' : 'FreshQA Strict Accuracy Score'}
             </div>
 
@@ -133,22 +136,22 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
                 return (
                   <div key={item.provider}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                      <span style={{ fontSize: '14.5px', fontWeight: item.isOcten ? 700 : 400, color: isV2 ? (item.isOcten ? '#0f172a' : '#475569') : (item.isOcten ? '#ffffff' : '#cbd5e1') }}>
+                      <span style={{ fontSize: '14.5px', fontWeight: item.isOcten ? 700 : 400, color: isWhiteBg ? (item.isOcten ? '#0f172a' : '#475569') : (item.isOcten ? '#ffffff' : '#cbd5e1') }}>
                         {item.provider}
-                        {item.isOcten && <span className="pill-badge" style={{ fontSize: '10px', marginLeft: '8px', padding: '1px 6px', backgroundColor: isV2 ? '#f0fdf4' : undefined, color: isV2 ? '#16a34a' : undefined, borderColor: isV2 ? '#86efac' : undefined }}>Octen</span>}
+                        {item.isOcten && <span className="pill-badge" style={{ fontSize: '10px', marginLeft: '8px', padding: '1px 6px', backgroundColor: isWhiteBg ? '#f0fdf4' : undefined, color: isWhiteBg ? '#16a34a' : undefined, borderColor: isWhiteBg ? '#86efac' : undefined }}>Octen</span>}
                       </span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', fontWeight: 700, color: item.isOcten ? (isV2 ? '#16a34a' : '#60ff70') : (isV2 ? '#64748b' : '#94a3b8') }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', fontWeight: 700, color: item.isOcten ? (isWhiteBg ? '#15803d' : '#60ff70') : (isWhiteBg ? '#475569' : '#94a3b8') }}>
                         {val}%
                       </span>
                     </div>
 
-                    <div style={{ width: '100%', height: '8px', backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '8px', backgroundColor: isWhiteBg ? '#e2e8f0' : 'rgba(255,255,255,0.06)', borderRadius: '4px', overflow: 'hidden' }}>
                       <div
                         style={{
                           width: `${val}%`,
                           height: '100%',
-                          backgroundColor: item.isOcten ? '#60ff70' : '#334155',
-                          boxShadow: item.isOcten ? '0 0 12px #60ff70' : 'none'
+                          backgroundColor: item.isOcten ? (isWhiteBg ? '#16a34a' : '#60ff70') : (isWhiteBg ? '#94a3b8' : '#334155'),
+                          boxShadow: item.isOcten ? (isWhiteBg ? 'none' : '0 0 12px #60ff70') : 'none'
                         }}
                       />
                     </div>
@@ -157,7 +160,7 @@ export const BenchmarkSection: React.FC<BenchmarkSectionProps> = ({ version: pro
               })}
             </div>
 
-            <div style={{ marginTop: '20px', fontSize: '11.5px', color: 'var(--text-dim)', textAlign: 'center', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ marginTop: '20px', fontSize: '11.5px', color: isWhiteBg ? '#475569' : 'var(--text-dim)', textAlign: 'center', fontFamily: 'var(--font-mono)' }}>
               FreshQA Strict & SimpleQA benchmarks · January 2026
             </div>
           </div>
