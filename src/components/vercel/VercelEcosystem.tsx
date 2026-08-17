@@ -6,6 +6,10 @@ interface EcosystemCategory {
   items: Array<{ name: string; isNew?: boolean; url: string }>;
 }
 
+interface VercelEcosystemProps {
+  version?: 'v1' | 'v2' | 'v3';
+}
+
 const CATEGORIES: EcosystemCategory[] = [
   {
     title: 'Agent Stack',
@@ -54,7 +58,7 @@ const CATEGORIES: EcosystemCategory[] = [
   }
 ];
 
-export const VercelEcosystem: React.FC = () => {
+export const VercelEcosystem: React.FC<VercelEcosystemProps> = ({ version }) => {
   const isV2 = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('v') !== 'v1';
 
   return (
