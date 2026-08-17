@@ -330,7 +330,11 @@
             <strong>全程模型驱动</strong>：本项目的全部代码编写、结构抽离、反向视觉校准与三梯度版本演进，均<strong>全程使用 Google Gemini 模型</strong>自主分析构建完成。
           </li>
           <li>
-            <strong>原站还原度与第三方泛化校验</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>Octen UI 规范与品牌 JSON Spec</strong>，分别生成 <strong>网站 1 (Octen.ai 原站还原)</strong> 与 <strong>网站 2 (Vercel.com 跨领域适配)</strong>。
+            <strong>原站还原度与第三方泛化双重校验</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>Octen UI 规范与品牌 JSON Spec</strong>，并行构建两个测试网站进行双维度校验：
+            <div style="margin-top: 4px; padding-left: 12px; border-left: 2px solid #e2e8f0; display: flex; flex-direction: column; gap: 4px;">
+              <span>• <strong>网站 1 (Octen.ai 原站还原)</strong>：主要考察抽离出来的设计规范对原站视觉风格、色彩调性与布局手感的高保真还原度。</span>
+              <span>• <strong>网站 2 (Vercel.com 跨领域适配)</strong>：将这套设计语言跨领域迁移应用至全新的第三方业务场景，主要考察该设计规范对其他全新项目的泛化性、通用适配度与兼容力。</span>
+            </div>
           </li>
           <li>
             <strong>结果 1 (v1 — 纯 MD + JSON 规范版)</strong>：完全基于结构化 Markdown 文本内容 (<a href="./octen_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline;">Octen MD</a> / <a href="./vercel_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline;">Vercel MD</a>) 与 基础 JSON Spec (<a href="./octen_ui_spec.json" target="_blank" style="color: #2563eb; text-decoration: underline;">UI Spec</a> • <a href="./octen_brand.json" target="_blank" style="color: #2563eb; text-decoration: underline;">Brand Spec</a>)，不依赖任何截图参考，评估纯代码规范的落地还原力。
