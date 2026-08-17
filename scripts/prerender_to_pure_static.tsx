@@ -107,5 +107,33 @@ ${cssContent}
 </html>`;
 
   fs.writeFileSync(path.join(rootDir, file), fullHtml, 'utf-8');
+  fs.writeFileSync(path.join(distDir, file), fullHtml, 'utf-8');
   console.log(`Pre-rendered pure static HTML (no JS/node needed to view): ${file}`);
 });
+
+// Copy comparison.html to dist/comparison.html and dist/index.html so Vercel root serves the dashboard directly
+const comparisonContent = fs.readFileSync(path.join(rootDir, 'comparison.html'), 'utf-8');
+fs.writeFileSync(path.join(distDir, 'comparison.html'), comparisonContent, 'utf-8');
+fs.writeFileSync(path.join(distDir, 'index.html'), comparisonContent, 'utf-8');
+
+// Copy reference screenshots & spec files to dist/
+const filesToCopy = [
+  'ref_part_1.png',
+  'ref_part_2.png',
+  'ref_part_3.png',
+  'ref_part_4.png',
+  'octen_website_content.md',
+  'vercel_website_content.md',
+  'octen_ui_spec.json',
+  'octen_brand.json'
+];
+
+filesToCopy.forEach((fileName) => {
+  const srcPath = path.join(rootDir, fileName);
+  const destPath = path.join(distDir, fileName);
+  if (fs.existsSync(srcPath)) {
+    fs.copyFileSync(srcPath, destPath);
+  }
+});
+
+console.log('Successfully generated 100% self-contained dist/ folder ready to drag-and-drop onto Vercel!');
