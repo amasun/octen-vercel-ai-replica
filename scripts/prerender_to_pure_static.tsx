@@ -60,7 +60,7 @@ function StaticPage({ site, version }: StaticPageProps) {
             <BuiltOnOcten version={version} />
             <BenchmarkSection version={version} />
             <QuickstartSection version={version} />
-            <Footer />
+            <Footer version={version} />
           </>
         ) : (
           <>

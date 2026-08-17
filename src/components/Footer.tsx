@@ -1,7 +1,116 @@
 import React from 'react';
 import { Mail, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  version?: 'v1' | 'v2' | 'v3';
+}
+
+export const Footer: React.FC<FooterProps> = ({ version }) => {
+  const isV1 = version === 'v1';
+
+  if (isV1) {
+    return (
+      <footer
+        style={{
+          backgroundColor: '#050806',
+          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          paddingTop: '60px',
+          paddingBottom: '40px',
+          color: '#94a3b8'
+        }}
+      >
+        <div className="container">
+          <div style={{ marginBottom: '32px' }}>
+            <h3 style={{ fontSize: '18px', color: '#ffffff', fontWeight: 600, marginBottom: '4px' }}>
+              Footer & Resources
+            </h3>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '40px',
+              marginBottom: '48px'
+            }}
+          >
+            {/* Get in Touch */}
+            <div>
+              <h4 style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600, marginBottom: '16px' }}>
+                Get in Touch
+              </h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
+                <li>
+                  General Inquiries: <a href="mailto:support@octen.ai" style={{ color: '#60ff70', textDecoration: 'underline' }}>support@octen.ai</a>
+                </li>
+                <li>
+                  Founder & CEO: <a href="mailto:kuan@octen.ai" style={{ color: '#60ff70', textDecoration: 'underline' }}>kuan@octen.ai</a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Products */}
+            <div>
+              <h4 style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600, marginBottom: '16px' }}>
+                Products
+              </h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
+                <li><a href="https://octen.ai/platform/broad-search" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Broad Search</a></li>
+                <li><a href="https://octen.ai/platform/web-search" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Web Search</a></li>
+                <li>Image Search <em>(Early Access)</em></li>
+                <li>Video Search <em>(Early Access)</em></li>
+                <li><a href="https://octen.ai/platform/model" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Model Gateway</a></li>
+                <li><a href="https://octen.ai/platform/extract" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Extract</a></li>
+                <li><a href="https://docs.octen.ai/api-reference/embedding" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Embedding</a></li>
+                <li><a href="https://docs.octen.ai/api-reference/vl-embedding" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>VL Embedding</a></li>
+                <li><a href="https://octen.ai/platform/answer" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Application / Answer</a></li>
+              </ul>
+            </div>
+
+            {/* Developers & Company */}
+            <div>
+              <h4 style={{ fontSize: '14px', color: '#ffffff', fontWeight: 600, marginBottom: '16px' }}>
+                Developers & Company
+              </h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px' }}>
+                <li><a href="https://status.octen.ai/" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Status</a></li>
+                <li><a href="https://github.com/Octen-Team" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>GitHub</a></li>
+                <li><a href="https://octen.ai/platform/overview" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>API Platform</a></li>
+                <li><a href="https://docs.octen.ai" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Docs</a></li>
+                <li><a href="https://octen.ai/blog" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Blog</a></li>
+                <li><a href="https://octen.ai/contact-sales" target="_blank" rel="noreferrer" style={{ color: '#94a3b8', textDecoration: 'none' }}>Contact Sales</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Certifications & Legal */}
+          <div
+            style={{
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              paddingTop: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '16px',
+              fontSize: '13px'
+            }}
+          >
+            <div>
+              <strong>Certifications & Legal:</strong> SOC 2® Type 2 Compliant
+            </div>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <a href="https://octen.ai/privacy-policy" target="_blank" rel="noreferrer" style={{ color: '#60ff70', textDecoration: 'underline' }}>Privacy Policy</a>
+              <span>•</span>
+              <a href="https://octen.ai/terms-of-service" target="_blank" rel="noreferrer" style={{ color: '#60ff70', textDecoration: 'underline' }}>Terms of Service</a>
+            </div>
+            <div>© 2026 Octen Inc. All rights reserved.</div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer
       style={{
