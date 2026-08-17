@@ -337,61 +337,64 @@
       </div>
 
       <div class="flowchart-container">
-        <!-- Node 1 -->
-        <div class="flow-node">
+        <!-- STEP 01: Inputs -->
+        <div class="flow-node" style="border-left: 3px solid #2563eb;">
           <div>
-            <div class="node-step-tag">STEP 01</div>
-            <div class="node-title">1. 内容结构化 MD</div>
+            <div class="node-step-tag" style="color: #2563eb;">STEP 01 · INPUTS</div>
+            <div class="node-title">1. 结构化输入源</div>
+            <div style="font-size: 11.5px; color: var(--muted-foreground); margin-bottom: 8px;">MD Markdown 文本 + JSON 品牌 Spec</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-top: auto;">
             <a href="./octen_website_content.md" target="_blank" class="ref-link">octen_website_content.md</a>
             <a href="./vercel_website_content.md" target="_blank" class="ref-link">vercel_website_content.md</a>
-          </div>
-        </div>
-
-        <div class="flow-arrow">→</div>
-
-        <!-- Node 2 -->
-        <div class="flow-node">
-          <div>
-            <div class="node-step-tag">STEP 02</div>
-            <div class="node-title">2. UI/品牌 Spec JSON</div>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-            <a href="./octen_brand.json" target="_blank" class="ref-link">octen_brand.json</a>
             <a href="./octen_ui_spec.json" target="_blank" class="ref-link">octen_ui_spec.json</a>
           </div>
         </div>
 
         <div class="flow-arrow">→</div>
 
-        <!-- Node 3 -->
-        <div class="flow-node">
+        <!-- STEP 02: Result 1 -->
+        <div class="flow-node" style="border-left: 3px solid #0284c7; background: #f0f9ff;">
           <div>
-            <div class="node-step-tag">STEP 03</div>
-            <div class="node-title">3. 截图修正 & UI Skills 润色</div>
+            <div class="node-step-tag" style="color: #0284c7;">STEP 02 · RESULT 1</div>
+            <div class="node-title">2. 纯 MD + JSON 规范生成 (v1)</div>
+            <div style="font-size: 11.5px; color: var(--muted-foreground); margin-bottom: 8px;">无截图参考的纯代码规范生成</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-            <a href="./ref_part_1.png" target="_blank" class="ref-link">全景切图 ref_part_1~4 (↗)</a>
-            <span style="font-size: 11px; color: var(--muted-foreground); margin-top: 2px;">+ UI Skills: ui-ux-pro-max, better-ui, taste-skill</span>
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-top: auto;">
+            <a href="./index1_v1.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #bae6fd;">index1_v1.html (网站 1 ↗)</a>
+            <a href="./index2_v1.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #bae6fd;">index2_v1.html (网站 2 ↗)</a>
           </div>
         </div>
 
         <div class="flow-arrow">→</div>
 
-        <!-- Node 4 -->
-        <div class="flow-node">
+        <!-- STEP 03: Result 2 -->
+        <div class="flow-node" style="border-left: 3px solid #9333ea; background: #faf5ff;">
           <div>
-            <div class="node-step-tag">STEP 04</div>
-            <div class="node-title">4. 三大梯度 HTML 产出</div>
+            <div class="node-step-tag" style="color: #9333ea;">STEP 03 · RESULT 2</div>
+            <div class="node-title">3. 截图视觉比对修正 (v2)</div>
+            <div style="font-size: 11.5px; color: var(--muted-foreground); margin-bottom: 8px;">+ 全景切图 ref_part_1~4 像素级矫正</div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-            <a href="./index1_v1.html" target="_blank" class="ref-link">index1_v1.html (网站 1 — 结果 1 纯 MD+JSON ↗)</a>
-            <a href="./index1_v2.html" target="_blank" class="ref-link">index1_v2.html (网站 1 — 结果 2 截图视觉修正 ↗)</a>
-            <a href="./index1_v3.html" target="_blank" class="ref-link">index1_v3.html (网站 1 — 结果 3 UI Skills 升级 ↗)</a>
-            <a href="./index2_v1.html" target="_blank" class="ref-link">index2_v1.html (网站 2 — 结果 1 纯 MD+JSON ↗)</a>
-            <a href="./index2_v2.html" target="_blank" class="ref-link">index2_v2.html (网站 2 — 结果 2 截图视觉修正 ↗)</a>
-            <a href="./index2_v3.html" target="_blank" class="ref-link">index2_v3.html (网站 2 — 结果 3 UI Skills 升级 ↗)</a>
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-top: auto;">
+            <a href="./ref_part_1.png" target="_blank" class="ref-link" style="background: #ffffff; border-color: #e9d5ff;">全景切图 ref_part_1~4 (↗)</a>
+            <a href="./index1_v2.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #e9d5ff;">index1_v2.html (网站 1 ↗)</a>
+            <a href="./index2_v2.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #e9d5ff;">index2_v2.html (网站 2 ↗)</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- STEP 04: Result 3 -->
+        <div class="flow-node" style="border-left: 3px solid #16a34a; background: #f0fdf4;">
+          <div>
+            <div class="node-step-tag" style="color: #16a34a;">STEP 04 · RESULT 3</div>
+            <div class="node-title">4. UI Skills 深度赋能 (v3)</div>
+            <div style="font-size: 11.5px; color: var(--muted-foreground); margin-bottom: 8px;">+ 加载 ui-ux-pro-max / better-ui / taste-skill</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px; margin-top: auto;">
+            <span style="font-size: 11px; color: #15803d; font-weight: 500;">注入: 光影 / WCAG / 同心圆角</span>
+            <a href="./index1_v3.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #bbf7d0;">index1_v3.html (网站 1 ↗)</a>
+            <a href="./index2_v3.html" target="_blank" class="ref-link" style="background: #ffffff; border-color: #bbf7d0;">index2_v3.html (网站 2 ↗)</a>
           </div>
         </div>
       </div>
