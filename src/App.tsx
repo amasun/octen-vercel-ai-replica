@@ -99,7 +99,7 @@ export const App: React.FC = () => {
             <RetrievalStack version={version} />
             <BuiltOnOcten version={version} />
             <BenchmarkSection version={version} />
-            <QuickstartSection />
+            <QuickstartSection version={version} />
             <Footer />
           </>
         ) : (
@@ -109,7 +109,7 @@ export const App: React.FC = () => {
             <VercelCaseStudies />
             <VercelRecentlyShipped version={version} />
             <VercelEcosystem version={version} />
-            <QuickstartSection />
+            <QuickstartSection version={version} />
             <VercelFooter />
           </>
         )}

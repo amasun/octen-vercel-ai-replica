@@ -59,7 +59,7 @@ function StaticPage({ site, version }: StaticPageProps) {
             <RetrievalStack version={version} />
             <BuiltOnOcten version={version} />
             <BenchmarkSection version={version} />
-            <QuickstartSection />
+            <QuickstartSection version={version} />
             <Footer />
           </>
         ) : (
@@ -68,7 +68,7 @@ function StaticPage({ site, version }: StaticPageProps) {
             <VercelCaseStudies />
             <VercelRecentlyShipped version={version} />
             <VercelEcosystem version={version} />
-            <QuickstartSection />
+            <QuickstartSection version={version} />
             <VercelFooter />
           </>
         )}
