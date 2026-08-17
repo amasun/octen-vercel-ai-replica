@@ -539,17 +539,23 @@
     <script>
       let currentVer = 'v1';
       let currentLayout = 'side';
-      let scrollMap = { v1: [0, 0], v2: [0, 0], v3: [0, 0] };
+      let lastScrollPos = [0, 0];
 
       function captureCurrentScrolls() {
         const currentContainer = document.getElementById('container-' + currentVer);
         if (currentContainer) {
           const iframes = currentContainer.querySelectorAll('iframe');
           if (iframes[0] && iframes[0].contentWindow) {
-            try { scrollMap[currentVer][0] = iframes[0].contentWindow.scrollY || iframes[0].contentWindow.pageYOffset || 0; } catch (e) {}
+            try {
+              const y0 = iframes[0].contentWindow.scrollY || iframes[0].contentWindow.pageYOffset || 0;
+              if (y0 >= 0) lastScrollPos[0] = y0;
+            } catch (e) {}
           }
           if (iframes[1] && iframes[1].contentWindow) {
-            try { scrollMap[currentVer][1] = iframes[1].contentWindow.scrollY || iframes[1].contentWindow.pageYOffset || 0; } catch (e) {}
+            try {
+              const y1 = iframes[1].contentWindow.scrollY || iframes[1].contentWindow.pageYOffset || 0;
+              if (y1 >= 0) lastScrollPos[1] = y1;
+            } catch (e) {}
           }
         }
       }
@@ -557,10 +563,11 @@
       function setVersion(ver) {
         if (currentVer === ver) return;
 
-        // Capture outer scroll & inner iframe scroll positions before switching
+        // Capture outer scroll & latest inner iframe scroll positions right before switching
         const outerY = window.scrollY || window.pageYOffset;
         captureCurrentScrolls();
-        const lastScrolls = scrollMap[currentVer];
+        const targetY0 = lastScrollPos[0];
+        const targetY1 = lastScrollPos[1];
 
         document.getElementById('ver-v1-btn').classList.remove('active');
         document.getElementById('ver-v2-btn').classList.remove('active');
@@ -586,10 +593,6 @@
           requestAnimationFrame(() => {
             window.scrollTo(0, outerY);
             const targetIframes = activeContainer.querySelectorAll('iframe');
-            
-            // Sync previous scroll position if target version hasn't been scrolled yet
-            const targetY0 = scrollMap[ver][0] > 0 ? scrollMap[ver][0] : lastScrolls[0];
-            const targetY1 = scrollMap[ver][1] > 0 ? scrollMap[ver][1] : lastScrolls[1];
 
             if (targetIframes[0] && targetIframes[0].contentWindow) {
               try { targetIframes[0].contentWindow.scrollTo(0, targetY0); } catch (e) {}
@@ -624,18 +627,39 @@
         }
       }
 
-      // Attach scroll listeners to inner iframes upon load for real-time tracking
-      window.addEventListener('DOMContentLoaded', () => {
-        const allIframes = document.querySelectorAll('iframe');
-        allIframes.forEach(iframe => {
-          iframe.addEventListener('load', () => {
-            try {
-              iframe.contentWindow.addEventListener('scroll', () => {
-                captureCurrentScrolls();
-              });
-            } catch (e) {}
-          });
+      // Attach real-time scroll listeners to inner iframes across all versions
+      function bindIframeScrollListeners() {
+        const containers = ['container-v1', 'container-v2', 'container-v3'];
+        containers.forEach(id => {
+          const container = document.getElementById(id);
+          if (container) {
+            const iframes = container.querySelectorAll('iframe');
+            iframes.forEach((iframe, idx) => {
+              const attach = () => {
+                try {
+                  if (iframe.contentWindow) {
+                    if (iframe._scrollHandler) {
+                      iframe.contentWindow.removeEventListener('scroll', iframe._scrollHandler);
+                    }
+                    iframe._scrollHandler = () => {
+                      try {
+                        const y = iframe.contentWindow.scrollY || iframe.contentWindow.pageYOffset || 0;
+                        lastScrollPos[idx] = y;
+                      } catch (e) {}
+                    };
+                    iframe.contentWindow.addEventListener('scroll', iframe._scrollHandler, { passive: true });
+                  }
+                } catch (e) {}
+              };
+              iframe.addEventListener('load', attach);
+              attach();
+            });
+          }
         });
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        bindIframeScrollListeners();
       });
     </script>
   </body>
