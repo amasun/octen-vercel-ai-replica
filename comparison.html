@@ -318,17 +318,20 @@
       <h1 style="margin-bottom: 16px;">Octen & Vercel AI 双网站复刻对比分析</h1>
       <div class="intro-box" style="margin-bottom: 24px;">
         <p style="font-size: 15px; font-weight: 600; color: var(--foreground); margin-bottom: 10px;">
-          本看板旨在双维度评估 AI 设计系统构建能力：
+          基本原则与三大版本生成演进逻辑 (Core Principles & Generation Evolution):
         </p>
-        <ol style="margin-left: 20px; font-size: 14px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 8px; line-height: 1.6;">
+        <ol style="margin-left: 20px; font-size: 14px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 10px; line-height: 1.6;">
           <li>
-            <strong>原站还原度校验（网站 1）</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>octen.ai 品牌与 UI 设计规范 (JSON Spec)</strong>，重新依据 <a href="./octen_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">Octen 官方内容</a> 生成 <strong>网站 1</strong>，用以评估抽离规范对原站视觉风格与交互手感的高保真还原度。
+            <strong>原站还原度与第三方泛化校验</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>Octen UI 规范与品牌 JSON Spec</strong>，分别生成 <strong>网站 1 (Octen.ai 原站还原)</strong> 与 <strong>网站 2 (Vercel.com 跨领域适配)</strong>。
           </li>
           <li>
-            <strong>第三方泛化适配校验（网站 2）</strong>：将这套设计语言跨领域迁移施加于第三方网站内容（<a href="https://vercel.com/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">Vercel.com</a> Agent Infrastructure）生成 <strong>网站 2</strong>，全面对比验证该设计体系在不同业务场景下的兼容度与跨端适配力。
+            <strong>结果 1 (v1 — 纯 MD + JSON 规范版)</strong>：完全基于结构化 Markdown 文本内容 (<a href="./octen_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline;">Octen MD</a> / <a href="./vercel_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline;">Vercel MD</a>) 与 基础 JSON Spec (<a href="./octen_ui_spec.json" target="_blank" style="color: #2563eb; text-decoration: underline;">UI Spec</a>)，不依赖任何截图参考，评估纯代码规范的落地还原力。
           </li>
           <li>
-            <strong>双梯度对比机制（结果 1 vs 结果 2）</strong>：每个网站均对应产出两种生成结果——<strong>结果 1（纯 MD + JSON 规范）</strong> 为无截图参考的纯规范生成；<strong>结果 2（MD + JSON + 截图视觉修正）</strong> 则是加入了视觉全景截图的微观矫正版。<em>（注：参考全景截图并非来自 context.dev 工具，而是后续人工手动截取提供给 AI 进行视觉反向比对的）</em>。
+            <strong>结果 2 (v2 — 截图视觉修正高保真版)</strong>：在结果 1 的基础上，加入人工截取的效果全景切图 (<a href="./ref_part_1.png" target="_blank" style="color: #2563eb; text-decoration: underline;">ref_part_1~4.png</a>) 进行反向比对与视觉微观矫正（如引入白底卡片板块与原切图排行榜面板）。
+          </li>
+          <li>
+            <strong>结果 3 (v3 — 基础 UI 规范 & 技巧 Skills 深度升级版)</strong>：在结果 2 的基础上，加载项目工作区中引入的额外基础 UI 规范与技巧 Skills（如 <code>ui-ux-pro-max</code> 设计库、<code>better-ui</code> 同心圆角/缓动、<code>better-colors</code> WCAG AAA 高对比度及 <code>taste-skill</code> Anti-Slop 前端工程润色），全面提升视觉质感与微交互体验。
           </li>
         </ol>
       </div>
@@ -366,13 +369,11 @@
         <div class="flow-node">
           <div>
             <div class="node-step-tag">STEP 03</div>
-            <div class="node-title">3. 全景截图视觉修正</div>
+            <div class="node-title">3. 截图修正 & UI Skills 润色</div>
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-            <a href="./ref_part_1.png" target="_blank" class="ref-link">ref_part_1.png (切图 1 ↗)</a>
-            <a href="./ref_part_2.png" target="_blank" class="ref-link">ref_part_2.png (切图 2 ↗)</a>
-            <a href="./ref_part_3.png" target="_blank" class="ref-link">ref_part_3.png (切图 3 ↗)</a>
-            <a href="./ref_part_4.png" target="_blank" class="ref-link">ref_part_4.png (切图 4 ↗)</a>
+            <a href="./ref_part_1.png" target="_blank" class="ref-link">全景切图 ref_part_1~4 (↗)</a>
+            <span style="font-size: 11px; color: var(--muted-foreground); margin-top: 2px;">+ UI Skills: ui-ux-pro-max, better-ui, taste-skill</span>
           </div>
         </div>
 
@@ -382,15 +383,15 @@
         <div class="flow-node">
           <div>
             <div class="node-step-tag">STEP 04</div>
-            <div class="node-title">4. 六大 HTML 产出生成</div>
+            <div class="node-title">4. 三大梯度 HTML 产出</div>
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
-            <a href="./index1_v1.html" target="_blank" class="ref-link">index1_v1.html (网站 1 — 纯 MD + JSON ↗)</a>
-            <a href="./index1_v2.html" target="_blank" class="ref-link">index1_v2.html (网站 1 — MD + JSON + 截图视觉修正 ↗)</a>
-            <a href="./index1_v3.html" target="_blank" class="ref-link">index1_v3.html (网站 1 — UI/UX Pro Max 深度设计升级 ↗)</a>
-            <a href="./index2_v1.html" target="_blank" class="ref-link">index2_v1.html (网站 2 — 纯 MD + JSON ↗)</a>
-            <a href="./index2_v2.html" target="_blank" class="ref-link">index2_v2.html (网站 2 — MD + JSON + 截图视觉修正 ↗)</a>
-            <a href="./index2_v3.html" target="_blank" class="ref-link">index2_v3.html (网站 2 — UI/UX Pro Max 深度设计升级 ↗)</a>
+            <a href="./index1_v1.html" target="_blank" class="ref-link">index1_v1.html (网站 1 — 结果 1 纯 MD+JSON ↗)</a>
+            <a href="./index1_v2.html" target="_blank" class="ref-link">index1_v2.html (网站 1 — 结果 2 截图视觉修正 ↗)</a>
+            <a href="./index1_v3.html" target="_blank" class="ref-link">index1_v3.html (网站 1 — 结果 3 UI Skills 升级 ↗)</a>
+            <a href="./index2_v1.html" target="_blank" class="ref-link">index2_v1.html (网站 2 — 结果 1 纯 MD+JSON ↗)</a>
+            <a href="./index2_v2.html" target="_blank" class="ref-link">index2_v2.html (网站 2 — 结果 2 截图视觉修正 ↗)</a>
+            <a href="./index2_v3.html" target="_blank" class="ref-link">index2_v3.html (网站 2 — 结果 3 UI Skills 升级 ↗)</a>
           </div>
         </div>
       </div>
