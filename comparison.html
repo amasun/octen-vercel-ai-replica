@@ -315,12 +315,20 @@
 
     <!-- Header & Process Audit (shadcn Style) -->
     <header>
-      <h1 style="margin-bottom: 16px;">Octen & Vercel AI 双网站复刻对比分析</h1>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+        <h1 style="margin-bottom: 0;">Octen & Vercel AI 双网站复刻对比分析</h1>
+        <span style="font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 9999px; background: #f0fdf4; color: #15803d; border: 1px solid #86efac; font-family: var(--font-mono);">
+          模型驱动: Google Gemini (Antigravity AI) 全程构建
+        </span>
+      </div>
       <div class="intro-box" style="margin-bottom: 24px;">
         <p style="font-size: 15px; font-weight: 600; color: var(--foreground); margin-bottom: 10px;">
           基本原则与三大版本生成演进逻辑 (Core Principles & Generation Evolution):
         </p>
         <ol style="margin-left: 20px; font-size: 14px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 10px; line-height: 1.6;">
+          <li>
+            <strong>全程模型驱动</strong>：本项目的全部代码编写、结构抽离、反向视觉校准与三梯度版本演进，均<strong>全程使用 Google Gemini 模型</strong>自主分析构建完成。
+          </li>
           <li>
             <strong>原站还原度与第三方泛化校验</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>Octen UI 规范与品牌 JSON Spec</strong>，分别生成 <strong>网站 1 (Octen.ai 原站还原)</strong> 与 <strong>网站 2 (Vercel.com 跨领域适配)</strong>。
           </li>
