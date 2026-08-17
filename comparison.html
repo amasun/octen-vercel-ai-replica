@@ -449,6 +449,20 @@
               以 <strong>Octen.ai 原站</strong> 为例，真正高保真的复刻应当理解并主动描述其 Hero 区域所模拟的<strong>海底光影意境</strong>——包含浮动的动态粒子、水中折射的光影变化、ASCII 视觉艺术元素、抽象渐变、跑马灯（Marquee）组件以及“章鱼 (Octopus)”品牌隐喻符号等视觉表达。只有具备对此类深层设计哲学与概念意象的感知力，才能真正重现原站的气质与灵魂。
             </p>
           </div>
+
+          <!-- Modular Search Architecture Reflection Card -->
+          <div style="background: #f0fdf4; padding: 16px; border-radius: 8px; border: 1px solid #bbf7d0;">
+            <div style="font-weight: 600; color: #166534; margin-bottom: 8px;">架构解耦思考：搜索引擎在中间环节的效用最大化 (Search Engine Modular Architecture Reflection)</div>
+            <p style="color: #14532d; font-size: 13px; line-height: 1.6; margin-bottom: 10px;">
+              让搜索引擎与 AI 直接执行“<strong>端到端 (A to B) 全自动盲猜生成</strong>”设计过于复杂，包含过多不可控变量（如复杂 DOM 渲染、运行时 JS 状态与粒子动画）。若将生成管线拆解为<strong>中间解耦环节</strong>，搜索引擎（如 Octen Web Search / Extract API）在各阶段作为“精准知识探测器”将发挥巨大效力：
+            </p>
+            <ul style="margin-left: 16px; color: #14532d; display: flex; flex-direction: column; gap: 6px; padding: 0; font-size: 13px; line-height: 1.5;">
+              <li><strong>1. 品牌与 UI 规范探测 (Brand & Design Token Extraction)</strong>：搜索引擎专注检索并抽离 CSS 变量、标准色阶 (HSL/OKLCh)、字体声明与圆角边距，产出确定性的 <code>brand_ui_spec.json</code>。</li>
+              <li><strong>2. 技术依赖与生态探测 (Tech Stack & Dependency Discovery)</strong>：检索目标网站使用的底层组件库 (Radix / Tailwind)、图标集 (Lucide) 与动画引擎 (Framer Motion / GSAP)，避免 AI 盲猜报错。</li>
+              <li><strong>3. 结构化语义提取 (Content Structuring)</strong>：通过 Extract API 剥离杂讯，将目标页面转为高保真的语义结构 Markdown (<code>content.md</code>)，实现文案与视觉的工程解耦。</li>
+              <li><strong>4. 领域 Skills 规则映射 (UX Rule Mapping)</strong>：匹配 <code>better-ui</code> / <code>taste-skill</code> 等规则，将视觉派系与交互手感做确定性约束，最终由 LLM 完成确定性的代码组装。</li>
+            </ul>
+          </div>
         </div>
       </div>
     </header>
