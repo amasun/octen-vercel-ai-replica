@@ -401,13 +401,13 @@
       <!-- Technical Evaluation Summary Card -->
       <div style="background: #ffffff; border: 1px solid var(--border); border-left: 4px solid #0f172a; border-radius: calc(var(--radius) * 1.2); padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="font-size: 15px; font-weight: 700; color: var(--foreground); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-          <span>📌 AI 网页复刻能力总结与局限评估 (Evaluation Summary):</span>
+          <span>AI 网页复刻能力总结与局限评估 (Evaluation Summary):</span>
         </div>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; font-size: 13.5px; line-height: 1.6;">
           <!-- Core Evolution Findings -->
           <div style="background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0;">
-            <div style="font-weight: 600; color: #0f172a; margin-bottom: 8px;">💡 三大生成阶段能力演进</div>
+            <div style="font-weight: 600; color: #0f172a; margin-bottom: 8px;">三大生成阶段能力演进</div>
             <ul style="margin-left: 16px; color: #334155; display: flex; flex-direction: column; gap: 8px; padding: 0;">
               <li><strong>1. 单纯文字/Context 存在局限</strong>：仅依赖文本 Markdown 与 JSON Spec (v1) 无法完全抓取并还原原站细微的色彩调性、材质感与版块交界视觉。</li>
               <li><strong>2. 引入切图参考产生显著作用</strong>：补充全景切图 (v2) 能极大地纠正色彩与局部结构（如白底卡片与排行榜），但静态图像依然无法表达 UX 基础规范的微交互动效。</li>
@@ -417,7 +417,7 @@
 
           <!-- Absolute Limitations -->
           <div style="background: #fff1f2; padding: 16px; border-radius: 8px; border: 1px solid #fecdd3;">
-            <div style="font-weight: 600; color: #9f1239; margin-bottom: 8px;">⚠️ 三种方式共同缺失的技术边界</div>
+            <div style="font-weight: 600; color: #9f1239; margin-bottom: 8px;">三种方式共同缺失的技术边界</div>
             <ul style="margin-left: 16px; color: #881337; display: flex; flex-direction: column; gap: 8px; padding: 0;">
               <li><strong>技术框架无法强遵循</strong>：纯提示词与切图无法强制约束深层代码框架的解耦范式或特定底层依赖机制。</li>
               <li><strong>WebGL / Shader 动态元素无法还原</strong>：静态截图与 LLM 文本均无法捕捉 WebGL 3D 渲染、Shader 粒子特效或 GPU 物理动画<em>（如切图 2 中 Octen 原站实际包含的 WebGL 动态交互，静态切图完全无法体现）</em>。</li>
