@@ -1,0 +1,122 @@
+{
+  "status": "ok",
+  "brand": {
+    "domain": "octen.ai",
+    "title": "Octen",
+    "description": "Octen (octen.ai) is an AI‑first search infrastructure provider that delivers real‑time, low‑latency web search and retrieval APIs for enterprises. Its platform combines keyword and LLM‑driven search, multimodal capabilities that understand text, images and video, and a suite of retrieval models—including the leading text and vision embeddings—for accurate, semantic results. Octen also offers tools to extract clean, structured content from any URL, a model gateway for text and image generation, and a robust embedding service optimized for retrieval tasks. Designed for high reliability and scalability, Octen enables developers to integrate powerful, enterprise‑grade search and knowledge‑extraction features into AI agents, applications, and services.",
+    "slogan": "Real-time, low-latency AI-native web search with enterprise reliability.",
+    "colors": [
+      {
+        "hex": "#ffffff",
+        "name": "White"
+      },
+      {
+        "hex": "#67e472",
+        "name": "Loud Green"
+      },
+      {
+        "hex": "#34773c",
+        "name": "Mermaid’s Tail"
+      }
+    ],
+    "logos": [
+      {
+        "url": "https://media.brand.dev/32787b45-4f67-4c4e-875f-744f5d7f34b5.svg",
+        "mode": "dark",
+        "colors": [
+          {
+            "hex": "#ffffff",
+            "name": "White"
+          }
+        ],
+        "resolution": {
+          "width": 106,
+          "height": 36,
+          "aspect_ratio": 2.94
+        },
+        "type": "logo"
+      },
+      {
+        "url": "https://media.brand.dev/e8999e2a-c410-4d83-897d-f47f1ff7bc48.png",
+        "mode": "light",
+        "colors": [
+          {
+            "hex": "#67e472",
+            "name": "Loud Green"
+          },
+          {
+            "hex": "#34773c",
+            "name": "Mermaid’s Tail"
+          },
+          {
+            "hex": "#070c08",
+            "name": "Existential Angst"
+          }
+        ],
+        "resolution": {
+          "width": 144,
+          "height": 144,
+          "aspect_ratio": 1
+        },
+        "type": "icon"
+      }
+    ],
+    "backdrops": [
+      {
+        "url": "https://media.brand.dev/2a1b33f2-9619-424e-b54d-5d10a3be3470.png",
+        "colors": [
+          {
+            "hex": "#71b263",
+            "name": "Palm Tree"
+          },
+          {
+            "hex": "#234031",
+            "name": "Everglade"
+          },
+          {
+            "hex": "#bbc4c1",
+            "name": "Polished Rock"
+          }
+        ],
+        "resolution": {
+          "width": 1000,
+          "height": 525,
+          "aspect_ratio": 1.9
+        }
+      }
+    ],
+    "socials": [],
+    "email": "support@octen.ai",
+    "is_nsfw": false,
+    "industries": {
+      "eic": [
+        {
+          "industry": "Technology",
+          "subindustry": "Artificial Intelligence & Machine Learning"
+        },
+        {
+          "industry": "Technology",
+          "subindustry": "Data Infrastructure & Analytics"
+        },
+        {
+          "industry": "Technology",
+          "subindustry": "Developer Tools & APIs"
+        }
+      ]
+    },
+    "links": {
+      "careers": null,
+      "terms": null,
+      "contact": null,
+      "privacy": null,
+      "blog": null,
+      "pricing": null
+    },
+    "primary_language": "chinese"
+  },
+  "code": 200,
+  "key_metadata": {
+    "credits_consumed": 10,
+    "credits_remaining": 0
+  }
+}

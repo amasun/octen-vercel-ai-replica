@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Octen vs Vercel 双网站对比与生成步骤审计看板</title>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --background: #ffffff;
+        --foreground: #0f172a;
+        --card: #ffffff;
+        --card-foreground: #0f172a;
+        --muted: #f8fafc;
+        --muted-foreground: #64748b;
+        --border: #e2e8f0;
+        --input: #e2e8f0;
+        --primary: #0f172a;
+        --primary-foreground: #ffffff;
+        --secondary: #f1f5f9;
+        --secondary-foreground: #0f172a;
+        --accent: #f1f5f9;
+        --accent-foreground: #0f172a;
+        --radius: 0.5rem;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        --font-mono: 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #f8fafc;
+        color: var(--foreground);
+        font-family: var(--font-sans);
+        line-height: 1.5;
+        padding: 32px 24px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* shadcn Card Container */
+      header {
+        max-width: 1400px;
+        margin: 0 auto 24px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) * 1.5);
+        padding: 32px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+      }
+
+      /* shadcn Badge */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background-color: var(--secondary);
+        border: 1px solid var(--border);
+        color: var(--secondary-foreground);
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--foreground);
+        letter-spacing: -0.025em;
+        margin-bottom: 8px;
+      }
+
+      .subhead {
+        color: var(--muted-foreground);
+        font-size: 15px;
+        margin-bottom: 24px;
+      }
+
+      .section-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--foreground);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Flowchart Diagram Layout */
+      .flowchart-container {
+        display: flex;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 24px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .flow-node {
+        flex: 1;
+        min-width: 220px;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 12px;
+      }
+
+      .flow-node:hover {
+        border-color: #94a3b8;
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+      }
+
+      .node-step-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+
+      .node-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--foreground);
+        margin-bottom: 8px;
+      }
+
+      .node-list {
+        font-size: 12.5px;
+        color: var(--muted-foreground);
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .node-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .node-list li::before {
+        content: "•";
+        color: #2563eb;
+        font-weight: bold;
+      }
+
+      .flow-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #cbd5e1;
+        font-size: 20px;
+        font-weight: 700;
+        user-select: none;
+        flex-shrink: 0;
+      }
+
+      .ref-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        align-items: center;
+      }
+
+      .ref-link {
+        color: var(--foreground);
+        text-decoration: none;
+        background: var(--muted);
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        transition: background-color 0.2s ease;
+      }
+
+      .ref-link:hover {
+        background: #e2e8f0;
+      }
+
+      /* shadcn Controls Toolbar */
+      .controls {
+        max-width: 1400px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) * 1.2);
+        padding: 12px 20px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .device-btn {
+        background: #ffffff;
+        color: var(--muted-foreground);
+        border: 1px solid var(--border);
+        padding: 6px 14px;
+        border-radius: var(--radius);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .device-btn:hover {
+        background: var(--muted);
+        color: var(--foreground);
+      }
+
+      .device-btn.active {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* Iframe Frame Stack Layout */
+      .comparison-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        transition: all 0.3s ease;
+      }
+
+      .comparison-container.side-by-side {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        height: 850px;
+      }
+
+      .iframe-box {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) * 1.5);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 800px;
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+      }
+
+      .comparison-container.side-by-side .iframe-box {
+        height: 100%;
+      }
+
+      .iframe-header {
+        background: #f8fafc;
+        padding: 10px 18px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .iframe-title {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--foreground);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #22c55e;
+      }
+
+      iframe {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #090c0a;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Header & Process Audit (shadcn Style) -->
+    <header>
+      <h1 style="margin-bottom: 16px;">Octen & Vercel AI 双网站复刻对比分析</h1>
+      <div class="intro-box" style="margin-bottom: 24px;">
+        <p style="font-size: 15px; font-weight: 600; color: var(--foreground); margin-bottom: 10px;">
+          本看板旨在双维度评估 AI 设计系统构建能力：
+        </p>
+        <ol style="margin-left: 20px; font-size: 14px; color: var(--muted-foreground); display: flex; flex-direction: column; gap: 8px; line-height: 1.6;">
+          <li>
+            <strong>原站还原度校验（网站 1）</strong>：使用从 <a href="https://www.context.dev/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">context.dev</a> 反向抽离出的 <strong>octen.ai 品牌与 UI 设计规范 (JSON Spec)</strong>，重新依据 <a href="./octen_website_content.md" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">Octen 官方内容</a> 生成 <strong>网站 1</strong>，用以评估抽离规范对原站视觉风格与交互手感的高保真还原度。
+          </li>
+          <li>
+            <strong>第三方泛化适配校验（网站 2）</strong>：将这套设计语言跨领域迁移施加于第三方网站内容（<a href="https://vercel.com/" target="_blank" style="color: #2563eb; text-decoration: underline; font-weight: 500;">Vercel.com</a> Agent Infrastructure）生成 <strong>网站 2</strong>，全面对比验证该设计体系在不同业务场景下的兼容度与跨端适配力。
+          </li>
+          <li>
+            <strong>双梯度对比机制（结果 1 vs 结果 2）</strong>：每个网站均对应产出两种生成结果——<strong>结果 1（纯 MD + JSON 规范）</strong> 为无截图参考的纯规范生成；<strong>结果 2（MD + JSON + 截图视觉修正）</strong> 则是加入了视觉全景截图的微观矫正版。<em>（注：参考全景截图并非来自 context.dev 工具，而是后续人工手动截取提供给 AI 进行视觉反向比对的）</em>。
+          </li>
+        </ol>
+      </div>
+
+      <div class="flowchart-container">
+        <!-- Node 1 -->
+        <div class="flow-node">
+          <div>
+            <div class="node-step-tag">STEP 01</div>
+            <div class="node-title">1. 内容结构化 MD</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+            <a href="./octen_website_content.md" target="_blank" class="ref-link">octen_website_content.md</a>
+            <a href="./vercel_website_content.md" target="_blank" class="ref-link">vercel_website_content.md</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- Node 2 -->
+        <div class="flow-node">
+          <div>
+            <div class="node-step-tag">STEP 02</div>
+            <div class="node-title">2. UI/品牌 Spec JSON</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+            <a href="./octen_brand.json" target="_blank" class="ref-link">octen_brand.json</a>
+            <a href="./octen_ui_spec.json" target="_blank" class="ref-link">octen_ui_spec.json</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- Node 3 -->
+        <div class="flow-node">
+          <div>
+            <div class="node-step-tag">STEP 03</div>
+            <div class="node-title">3. 全景截图视觉修正</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+            <a href="./ref_part_1.png" target="_blank" class="ref-link">ref_part_1.png (切图 1 ↗)</a>
+            <a href="./ref_part_2.png" target="_blank" class="ref-link">ref_part_2.png (切图 2 ↗)</a>
+            <a href="./ref_part_3.png" target="_blank" class="ref-link">ref_part_3.png (切图 3 ↗)</a>
+            <a href="./ref_part_4.png" target="_blank" class="ref-link">ref_part_4.png (切图 4 ↗)</a>
+          </div>
+        </div>
+
+        <div class="flow-arrow">→</div>
+
+        <!-- Node 4 -->
+        <div class="flow-node">
+          <div>
+            <div class="node-step-tag">STEP 04</div>
+            <div class="node-title">4. 六大 HTML 产出生成</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 8px;">
+            <a href="./index1_v1.html" target="_blank" class="ref-link">index1_v1.html (网站 1 — 纯 MD + JSON ↗)</a>
+            <a href="./index1_v2.html" target="_blank" class="ref-link">index1_v2.html (网站 1 — MD + JSON + 截图视觉修正 ↗)</a>
+            <a href="./index1_v3.html" target="_blank" class="ref-link">index1_v3.html (网站 1 — UI/UX Pro Max 深度设计升级 ↗)</a>
+            <a href="./index2_v1.html" target="_blank" class="ref-link">index2_v1.html (网站 2 — 纯 MD + JSON ↗)</a>
+            <a href="./index2_v2.html" target="_blank" class="ref-link">index2_v2.html (网站 2 — MD + JSON + 截图视觉修正 ↗)</a>
+            <a href="./index2_v3.html" target="_blank" class="ref-link">index2_v3.html (网站 2 — UI/UX Pro Max 深度设计升级 ↗)</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Controls Bar -->
+    <div class="controls">
+      <div style="font-weight: 600; font-size: 14px; color: var(--foreground);">
+        Iframe 对比模式与版本切换
+      </div>
+
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <!-- Version Filter Switcher -->
+        <div class="btn-group">
+          <span style="font-size: 12px; color: var(--muted-foreground);">生成结果版本:</span>
+          <button class="device-btn active" id="ver-v1-btn" onclick="setVersion('v1')">结果 1 (纯 MD + JSON 规范)</button>
+          <button class="device-btn" id="ver-v2-btn" onclick="setVersion('v2')">结果 2 (截图视觉修正)</button>
+          <button class="device-btn" id="ver-v3-btn" onclick="setVersion('v3')">结果 3 (UI/UX Pro Max 深度设计升级)</button>
+        </div>
+
+        <!-- Layout Mode Switcher -->
+        <div class="btn-group">
+          <span style="font-size: 12px; color: var(--muted-foreground);">布局方式:</span>
+          <button class="device-btn" id="layout-stack-btn" onclick="setLayout('stack')">上下排列</button>
+          <button class="device-btn active" id="layout-side-btn" onclick="setLayout('side')">左右排列</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dual Iframe Stack Containers for Each Version (Zero-Flicker Instant Switch) -->
+    <!-- VERSION V1 CONTAINER -->
+    <div class="comparison-container version-group side-by-side" id="container-v1" style="display: grid;">
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 1 — Octen Search Infrastructure (结果 1 纯 MD+JSON版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index1_v1.html</span>
+        </div>
+        <iframe src="./index1_v1.html"></iframe>
+      </div>
+
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 2 — Vercel Agentic Infrastructure (结果 1 纯 MD+JSON版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index2_v1.html</span>
+        </div>
+        <iframe src="./index2_v1.html"></iframe>
+      </div>
+    </div>
+
+    <!-- VERSION V2 CONTAINER -->
+    <div class="comparison-container version-group side-by-side" id="container-v2" style="display: none;">
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 1 — Octen Search Infrastructure (结果 2 截图视觉修正高保真版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index1_v2.html</span>
+        </div>
+        <iframe src="./index1_v2.html"></iframe>
+      </div>
+
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 2 — Vercel Agentic Infrastructure (结果 2 截图视觉修正高保真版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index2_v2.html</span>
+        </div>
+        <iframe src="./index2_v2.html"></iframe>
+      </div>
+    </div>
+
+    <!-- VERSION V3 CONTAINER -->
+    <div class="comparison-container version-group side-by-side" id="container-v3" style="display: none;">
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 1 — Octen Search Infrastructure (结果 3 UI/UX Pro Max 深度设计升级版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index1_v3.html</span>
+        </div>
+        <iframe src="./index1_v3.html"></iframe>
+      </div>
+
+      <div class="iframe-box">
+        <div class="iframe-header">
+          <div class="iframe-title">
+            <span class="status-dot"></span>
+            <span>网站 2 — Vercel Agentic Infrastructure (结果 3 UI/UX Pro Max 深度设计升级版)</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted-foreground);">index2_v3.html</span>
+        </div>
+        <iframe src="./index2_v3.html"></iframe>
+      </div>
+    </div>
+
+    <script>
+      let currentVer = 'v1';
+      let currentLayout = 'side';
+
+      function setVersion(ver) {
+        currentVer = ver;
+        document.getElementById('ver-v1-btn').classList.remove('active');
+        document.getElementById('ver-v2-btn').classList.remove('active');
+        document.getElementById('ver-v3-btn').classList.remove('active');
+
+        const v1Box = document.getElementById('container-v1');
+        const v2Box = document.getElementById('container-v2');
+        const v3Box = document.getElementById('container-v3');
+
+        v1Box.style.display = 'none';
+        v2Box.style.display = 'none';
+        v3Box.style.display = 'none';
+
+        const activeBtn = document.getElementById('ver-' + ver + '-btn');
+        if (activeBtn) activeBtn.classList.add('active');
+
+        const activeContainer = document.getElementById('container-' + ver);
+        if (activeContainer) {
+          activeContainer.style.display = currentLayout === 'side' ? 'grid' : 'flex';
+        }
+      }
+
+      function setLayout(mode) {
+        currentLayout = mode;
+        const stackBtn = document.getElementById('layout-stack-btn');
+        const sideBtn = document.getElementById('layout-side-btn');
+        const groups = document.querySelectorAll('.version-group');
+
+        if (mode === 'side') {
+          sideBtn.classList.add('active');
+          stackBtn.classList.remove('active');
+          groups.forEach(g => {
+            g.classList.add('side-by-side');
+            if (g.id === 'container-' + currentVer) g.style.display = 'grid';
+          });
+        } else {
+          stackBtn.classList.add('active');
+          sideBtn.classList.remove('active');
+          groups.forEach(g => {
+            g.classList.remove('side-by-side');
+            if (g.id === 'container-' + currentVer) g.style.display = 'flex';
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
